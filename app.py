@@ -16,7 +16,7 @@ def create_task():
     task_id_control += 1 # Soma 1 no identificador
     tasks.append(new_task)
     print(tasks)
-    return jsonify({"message":  "Nova tarefa criada com sucesso"}) # Retorno em dicionário
+    return jsonify({"message":  "Nova tarefa criada com sucesso", "id": new_task.id}) # Retorno em dicionário
 
 @app.route('/tasks', methods=['GET'])
 def get_tasks():
@@ -50,8 +50,8 @@ def update_task(id):
     task.title = data['title']
     task.description = data['description']
     task.completed = data['completed']
-    print(task)
-    return jsonify({"message:": "Tarefa atualizada com sucesso!"}) # Padrão de retorno é 200
+    
+    return jsonify({"message": "Tarefa atualizada com sucesso"}) # Padrão de retorno é 200
     # Não se atualiza o identificador se não ele perde os registros
 
 @app.route('/tasks/<int:id>', methods=['DELETE'])
@@ -61,7 +61,7 @@ def delete_task(id):
         print(t)
         if t.id == id:
             task = t
-            break
+            break # A partir do momento que ele encontrou ele quebra o loop
     
     if not task:
         return jsonify({"message": "Não possível encontrar a atividade"}), 404 # Status de retorno
